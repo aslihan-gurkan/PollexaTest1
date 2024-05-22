@@ -17,6 +17,9 @@ class DiscoverViewController: UIViewController {
     @IBOutlet weak var activePollsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait // Yalnızca dikey yönelimi destekle
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
