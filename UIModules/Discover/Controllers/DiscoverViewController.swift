@@ -25,19 +25,12 @@ class DiscoverViewController: UIViewController {
         tableView.dataSource = self
         
         setupViews()
-        setupConstraints()
         fetchPosts()
-
     }
-
 
     private func setupViews() {
-        
-    }
-
-    private func setupConstraints() {
-
-        activePollsButton.layer.cornerRadius = activePollsButton.frame.height / 2
+        activePollsButton.layer.cornerRadius = 20//activePollsButton.frame.height / 2
+        activePollsButton.tintColor = UIColor.systemGroupedBackground
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
     }
     
@@ -64,6 +57,10 @@ class DiscoverViewController: UIViewController {
 
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return postViewModels.count
+//    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postViewModels.count
     }
@@ -78,7 +75,13 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: postViewModel)
        
         //setupCellViews()
+//        cell.layer.borderColor = UIColor.red.cgColor //UIColor.white.cgColor
+//        cell.layer.borderWidth = 10
+//        cell.layer.cornerRadius = 35
+//        cell.layer.cornerRadius /cell.layer.cornerRadius / 2
         cell.layer.borderWidth = 10
+        cell.layer.borderColor = UIColor.systemGroupedBackground.cgColor
+        
         cell.layer.cornerRadius = 35
         
         return cell

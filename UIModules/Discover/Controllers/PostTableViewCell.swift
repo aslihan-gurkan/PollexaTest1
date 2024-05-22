@@ -22,81 +22,151 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var rightPercentage: UILabel!
     @IBOutlet weak var totalVotesLabel: UILabel!
     
+    var votesForLeftImageCount: Int = 0
+    var votesForRightImageCount: Int = 0
+    private var userVote: UserVote = .none
+    
+    var totalVotes: Int {
+        return votesForLeftImageCount + votesForRightImageCount
+    }
+    
+    enum UserVote {
+        case none
+        case leftImage
+        case rightImage
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        setupViews()
+        updatePercentageLabels()
+    }
+    
+    @IBAction func leftButtonTapped(_ sender: Any) {
+        voteForLeftImage()
+    }
+    
+    @IBAction func rightButtonTapped(_ sender: Any) {
+        voteForRightImage()
+    }
+    
+    func updateButtons() {
+        leftLikeButton.setImage(UIImage(systemName: userVote == .leftImage ? "hand.thumbsup.fill" : "hand.thumbsup"), for: .normal)
+        rightLikeButton.setImage(UIImage(systemName: userVote == .rightImage ? "hand.thumbsup.fill" : "hand.thumbsup"), for: .normal)
+    }
+    
+    func voteForLeftImage() {
+        updateVotes(newVote: .leftImage)
     }
 
-    private func setupConstraints() {
-
-        profileImage.layer.cornerRadius = profileImage.frame.width / 2
+    func voteForRightImage() {
+        updateVotes(newVote: .rightImage)
+    }
+    
+    private func updateVotes(newVote: UserVote) {
+        
+        switch userVote {
+            case .none:
+                updateVoteCount(for: newVote, increment: true)
+            case .leftImage:
+                if newVote == .leftImage {
+                    updateVoteCount(for: .leftImage, increment: false)
+                } else {
+                    updateVoteCount(for: .leftImage, increment: false)
+                    updateVoteCount(for: .rightImage, increment: true)
+                }
+            case .rightImage:
+                if newVote == .rightImage {
+                    updateVoteCount(for: .rightImage, increment: false)
+                } else {
+                    updateVoteCount(for: .rightImage, increment: false)
+                    updateVoteCount(for: .leftImage, increment: true)
+                }
+            }
+        
+        userVote = (userVote == newVote) ? .none : newVote
+        updatePercentageLabels()
+        updateButtons()
+    }
+    
+    private func updateVoteCount(for vote: UserVote, increment: Bool) {
+       if vote == .leftImage {
+           votesForLeftImageCount = max(0, votesForLeftImageCount + (increment ? 1 : -1))
+       } else if vote == .rightImage {
+           votesForRightImageCount = max(0, votesForRightImageCount + (increment ? 1 : -1))
+       }
+   }
+    
+    func updatePercentageLabels() {
+        
+        if totalVotes > 0 {
+//            let leftImagePercentage = Double(votesForLeftImageCount / totalVotes) * 100
+//            let rightImagePercentage = Double(votesForRightImageCount / totalVotes) * 100
+            let leftImagePercentage = (Double(votesForLeftImageCount) / Double(totalVotes)) * 100
+            let rightImagePercentage = (Double(votesForRightImageCount) / Double(totalVotes)) * 100
+            leftPercentage.text = String(format: "%.0f%%", leftImagePercentage)
+            rightPercentage.text = String(format: "%.0f%%", rightImagePercentage)
+            
+            //make hidden if user didin't vote
+            leftPercentage.isHidden = userVote == .none
+            rightPercentage.isHidden = userVote == .none
+        } else {
+            leftPercentage.text = "0%"
+            rightPercentage.text = "0%"
+            leftPercentage.isHidden = true
+            rightPercentage.isHidden = true
+        }
+        updateTotalVotesLabel()
     }
     
     func configure(with viewModel: PostViewModel) {
         profileImage.image = viewModel.userImage
         userNameLabel.text = viewModel.username
-        
+        contentLabel.text = viewModel.content
         let dateRemainder = calculateDateRemainder(viewModel.createdDate)
         dateLabel.text = dateRemainder
         leftImage.image = viewModel.options[0].image
         rightImage .image = viewModel.options[1].image
         
-        
-        let totalVotes = 6
-        totalVotesLabel.text = "\(totalVotes) Total Votes"
-        // Oy oranları ve butonlar buraya atanacak
-        
+        updateTotalVotesLabel()
     }
-
+    
+    private func updateTotalVotesLabel() {
+        totalVotesLabel.text = "\(totalVotes) Total Votes"
+    }
     
     private func setupViews() {
-//        cell.layer.borderWidth = 10
-//        cell.layer.cornerRadius = 35
+        //TODO: fonksiyon değişikliği ve image kenarları
+        leftImage.layer.cornerRadius = 8 //leftImage.layer.cornerRadius / 2
+        rightImage.layer.cornerRadius = 8 //rightImage.layer.cornerRadius / 2
+        profileImage.layer.cornerRadius = profileImage.frame.width / 2
+        
+        leftLikeButton.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .small)
+        rightLikeButton.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .small)
     }
-    
+
     private func calculateDateRemainder(_ date: Date) -> String? {
-//        let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "d MMM y, h:mm a"
-//            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-//            
-//            guard let date = dateFormatter.date(from: dateString) else {
-//                return nil
-//            }
-            
-            let calendar = Calendar.current
-            let now = Date()
-            let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date, to: now)
-            
-            if let year = components.year, year > 0 {
-                return year == 1 ? "1 year ago" : "\(year) years ago"
-            }
-            
-            if let month = components.month, month > 0 {
-                return month == 1 ? "1 month ago" : "\(month) months ago"
-            }
-            
-            if let day = components.day, day > 0 {
-                return day == 1 ? "1 day ago" : "\(day) days ago"
-            }
-            
-            if let hour = components.hour, hour > 0 {
-                return hour == 1 ? "1 hour ago" : "\(hour) hours ago"
-            }
-            
-            if let minute = components.minute, minute > 0 {
-                return minute == 1 ? "1 minute ago" : "\(minute) minutes ago"
-            }
-            
-            if let second = components.second, second > 0 {
-                return second == 1 ? "1 second ago" : "\(second) seconds ago"
-            }
-            
-            return "just now"
+
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date, to: currentDate)
         
+        let timeUnits = [
+            ("year", components.year),
+            ("month", components.month),
+            ("day", components.day),
+            ("hour", components.hour),
+            ("minute", components.minute),
+            ("second", components.second)
+        ]
         
+        for (unit, value) in timeUnits {
+            if let value = value, value > 0 {
+                return value == 1 ? "1 \(unit) ago" : "\(value) \(unit)s ago "
+            }
+        }
         
-        
+        return "just now"
     }
-    
 }
