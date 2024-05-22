@@ -140,6 +140,10 @@ class PostTableViewCell: UITableViewCell {
         //TODO: fonksiyon değişikliği ve image kenarları
         leftImage.layer.cornerRadius = 8 //leftImage.layer.cornerRadius / 2
         rightImage.layer.cornerRadius = 8 //rightImage.layer.cornerRadius / 2
+        
+        leftImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // Sol üst ve sol alt köşeleri maskeler
+        rightImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner] // Sağ üst ve sağ alt köşeleri maskeler
+                
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
         
         leftLikeButton.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .small)

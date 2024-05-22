@@ -10,15 +10,17 @@ import UIKit
 class DiscoverViewController: UIViewController {
 
     // MARK: - Properties
-    private let postProvider = PostProvider.shared
+    let postProvider = PostProvider.shared
     private var postViewModels = [PostViewModel]()
 
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var activePollsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait // Yalnızca dikey yönelimi destekle
+        return .portrait // Uygulamada yalnızca dikey yönelimi destekle
     }
     
     override func viewDidLoad() {
@@ -31,13 +33,11 @@ class DiscoverViewController: UIViewController {
         fetchPosts()
     }
 
-    private func setupViews() {
-        activePollsButton.layer.cornerRadius = 20//activePollsButton.frame.height / 2
-        activePollsButton.tintColor = UIColor.systemGroupedBackground
+    func setupViews() {
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
     }
     
-    private func fetchPosts() {
+    func fetchPosts() {
         postProvider.fetchAll { [weak self] result in
             switch result {
             case .success(let posts):
@@ -49,11 +49,32 @@ class DiscoverViewController: UIViewController {
             }
         }
     }
-    
+
     private func updateActivePolls() {
-        // Henüz oylanmamış anketlerin sayısını hesapla
-        let activePollsCount = postViewModels.count
-        activePollsButton.setTitle("\(activePollsCount) Active Polls", for: .normal)
+        
+        // TODO: Henüz oylanmamış anketlerin sayısını hesapla
+        let activePollsCount = postViewModels.count //To test constraint of tableView make : 0
+        
+        if activePollsCount > 0 {
+            activePollsButton.isHidden = false
+            let font = UIFont(name: "Arial-Bold", size: 17.0)
+            activePollsButton.titleLabel?.font = font
+            activePollsButton.setTitle("\(activePollsCount) Active Polls", for: .normal)
+            tableViewTopConstraint.constant = 110 // Yukarı kaydırmak istediğiniz mesafe
+            
+        } else {
+            
+            activePollsButton.isHidden = true
+            tableViewTopConstraint.constant = 20 // Normal pozisyona geri dön
+        }
+        
+        setupActivePollsButtonView()
+    }
+    
+    func setupActivePollsButtonView() {
+        activePollsButton.layer.cornerRadius = 20 //activePollsButton.frame.height / 2
+        activePollsButton.tintColor = UIColor.systemGroupedBackground
+
     }
     
 }
@@ -77,21 +98,15 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         let postViewModel = postViewModels[indexPath.row]
         cell.configure(with: postViewModel)
        
-        //setupCellViews()
-//        cell.layer.borderColor = UIColor.red.cgColor //UIColor.white.cgColor
-//        cell.layer.borderWidth = 10
-//        cell.layer.cornerRadius = 35
-//        cell.layer.cornerRadius /cell.layer.cornerRadius / 2
-        cell.layer.borderWidth = 10
-        cell.layer.borderColor = UIColor.systemGroupedBackground.cgColor
-        
-        cell.layer.cornerRadius = 35
+        setUpCellViews(cell)
         
         return cell
         
     }
     
-    private func setupCellViews() {
-        
+    func setUpCellViews(_ cell: UITableViewCell) {
+        cell.layer.borderWidth = 10
+        cell.layer.borderColor = UIColor.systemGroupedBackground.cgColor
+        cell.layer.cornerRadius = 35
     }
 }
