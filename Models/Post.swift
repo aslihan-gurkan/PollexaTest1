@@ -13,6 +13,9 @@ struct Post: Decodable {
     let createdAt: Date
     let content: String
     let options: [Option]
+    let votesForLeftImage: Int
+    let votesForRightImage: Int
+    let lastVoted: Date
     let user: User
 }
 

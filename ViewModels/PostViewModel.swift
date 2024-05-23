@@ -31,7 +31,19 @@ struct PostViewModel {
     var userImage: UIImage {
         return post.user.image
     }
-
+    
+    var votesForLeftImage: Int {
+        return post.votesForLeftImage
+    }
+    
+    var votesForRightImage: Int {
+        return post.votesForRightImage
+    }
+    
+    var lastVotedAt: Date {
+        return post.lastVoted
+    }
+    
     var username: String {
         return post.user.username
     }

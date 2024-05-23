@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol PostSelectionDelegate {
+    func didSelectPost(postText: String, selectedLeftImage: UIImage, selectedRightImage: UIImage)
+}
+
 class PostTableViewCell: UITableViewCell {
     
     @IBOutlet weak var profileImage: UIImageView!
@@ -21,6 +25,8 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var leftPercentage: UILabel!
     @IBOutlet weak var rightPercentage: UILabel!
     @IBOutlet weak var totalVotesLabel: UILabel!
+    
+    var delegate: PostSelectionDelegate?
     
     var votesForLeftImageCount: Int = 0
     var votesForRightImageCount: Int = 0
@@ -41,6 +47,25 @@ class PostTableViewCell: UITableViewCell {
         
         setupViews()
         updatePercentageLabels()
+    }
+    
+    func configure(with viewModel: PostViewModel) {
+        profileImage.image = viewModel.userImage
+        userNameLabel.text = viewModel.username
+        contentLabel.text = viewModel.content
+        let dateRemainder = DateHelper.calculateDateRemainder(from: viewModel.createdDate, isVote: false)
+        dateLabel.text = dateRemainder
+        
+        let lastVotedDateRemainder = DateHelper.calculateDateRemainder(from: viewModel.lastVotedAt, isVote: true)
+        VotedDateLabel.text = "LAST VOTED \(lastVotedDateRemainder)"
+        
+        leftImage.image = viewModel.options[0].image
+        rightImage .image = viewModel.options[1].image
+ 
+        votesForLeftImageCount = viewModel.votesForLeftImage
+        votesForRightImageCount = viewModel.votesForRightImage
+        
+        updateTotalVotesLabel()
     }
     
     @IBAction func leftButtonTapped(_ sender: Any) {
@@ -96,7 +121,7 @@ class PostTableViewCell: UITableViewCell {
        } else if vote == .rightImage {
            votesForRightImageCount = max(0, votesForRightImageCount + (increment ? 1 : -1))
        }
-   }
+    }
     
     func updatePercentageLabels() {
         
@@ -120,18 +145,6 @@ class PostTableViewCell: UITableViewCell {
         updateTotalVotesLabel()
     }
     
-    func configure(with viewModel: PostViewModel) {
-        profileImage.image = viewModel.userImage
-        userNameLabel.text = viewModel.username
-        contentLabel.text = viewModel.content
-        let dateRemainder = calculateDateRemainder(viewModel.createdDate)
-        dateLabel.text = dateRemainder
-        leftImage.image = viewModel.options[0].image
-        rightImage .image = viewModel.options[1].image
-        
-        updateTotalVotesLabel()
-    }
-    
     private func updateTotalVotesLabel() {
         totalVotesLabel.text = "\(totalVotes) Total Votes"
     }
@@ -149,28 +162,11 @@ class PostTableViewCell: UITableViewCell {
         leftLikeButton.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .small)
         rightLikeButton.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .small)
     }
-
-    private func calculateDateRemainder(_ date: Date) -> String? {
-
-        let calendar = Calendar.current
-        let currentDate = Date()
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date, to: currentDate)
+    
+    @IBAction func detailPostButtonTapped(_ sender: Any) {
+        delegate?.didSelectPost(postText: userNameLabel.text!, selectedLeftImage: leftImage.image!, selectedRightImage: rightImage.image!)
         
-        let timeUnits = [
-            ("year", components.year),
-            ("month", components.month),
-            ("day", components.day),
-            ("hour", components.hour),
-            ("minute", components.minute),
-            ("second", components.second)
-        ]
-        
-        for (unit, value) in timeUnits {
-            if let value = value, value > 0 {
-                return value == 1 ? "1 \(unit) ago" : "\(value) \(unit)s ago "
-            }
-        }
-        
-        return "just now"
     }
+    
+    
 }

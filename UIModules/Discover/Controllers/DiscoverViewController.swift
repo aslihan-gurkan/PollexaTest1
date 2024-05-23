@@ -59,8 +59,14 @@ class DiscoverViewController: UIViewController {
             activePollsButton.isHidden = false
             let font = UIFont(name: "Arial-Bold", size: 17.0)
             activePollsButton.titleLabel?.font = font
-            activePollsButton.setTitle("\(activePollsCount) Active Polls", for: .normal)
-            tableViewTopConstraint.constant = 110 // Yukarı kaydırmak istediğiniz mesafe
+            activePollsButton.setTitle("\(activePollsCount) \(activePollsCount == 1 ? "Active Poll" : "Active Polls")", for: .normal)
+
+//            if let titleLabel = activePollsButton.titleLabel {
+//                titleLabel.font = UIFont(name: "Arial-BoldMT", size: 17)
+//            }
+            
+            
+            tableViewTopConstraint.constant = 110 // TODO: ayrı func. yap :Yukarı kaydırmak istediğiniz mesafe
             
         } else {
             

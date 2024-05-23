@@ -55,10 +55,21 @@
                                 </state>
                                 <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" imagePadding="190" titleAlignment="leading">
                                     <imageReference key="image" image="arrow.right.square.fill" catalog="system" symbolScale="large"/>
+                                    <backgroundConfiguration key="background" cornerRadius="20"/>
                                     <attributedString key="attributedTitle">
                                         <fragment content="2 Active Polls">
                                             <attributes>
-                                                <font key="NSFont" size="17" name="Arial-BoldMT"/>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <attributedString key="attributedSubtitle">
+                                        <fragment content="See Details">
+                                            <attributes>
+                                                <font key="NSFont" size="13" name="Avenir-Light"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
@@ -199,6 +210,9 @@
                                                             </imageReference>
                                                         </backgroundConfiguration>
                                                     </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="detailPostButtonTapped:" destination="4G1-Fd-0P7" eventType="touchUpInside" id="H1O-gG-6MB"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVA-zw-xWj">
                                                     <rect key="frame" x="193" y="224" width="25" height="25"/>
@@ -330,6 +344,120 @@
             </objects>
             <point key="canvasLocation" x="1715" y="2"/>
         </scene>
+        <!--Update Post View Controller-->
+        <scene sceneID="yFB-wJ-d1d">
+            <objects>
+                <viewController id="QJs-cL-Ya3" customClass="UpdatePostViewController" customModule="Pollexa" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wbf-8e-YSQ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKO-m1-zSQ">
+                                <rect key="frame" x="40" y="130" width="96" height="84"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="96" id="0VN-IZ-HfB"/>
+                                </constraints>
+                                <color key="tintColor" red="0.29391571969696972" green="0.29391571969696972" blue="0.29391571969696972" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Save" imagePadding="5">
+                                    <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
+                                    <backgroundConfiguration key="background" cornerRadius="20">
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Odt-md-PzD">
+                                <rect key="frame" x="144" y="130" width="96" height="84"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="96" id="qGn-er-bBC"/>
+                                </constraints>
+                                <color key="tintColor" red="0.29391571970000002" green="0.29391571970000002" blue="0.29391571970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Update" imagePadding="5">
+                                    <imageReference key="image" image="pencil.and.scribble" catalog="system" symbolScale="large"/>
+                                    <backgroundConfiguration key="background" cornerRadius="20">
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQf-D7-cM8">
+                                <rect key="frame" x="248" y="130" width="96" height="84"/>
+                                <color key="tintColor" red="0.29391571970000002" green="0.29391571970000002" blue="0.29391571970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Hide" imagePadding="5">
+                                    <imageReference key="image" image="eye.slash" catalog="system" symbolScale="large"/>
+                                    <backgroundConfiguration key="background" cornerRadius="20">
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                </buttonConfiguration>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vfm-8o-q6T"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="leading" secondItem="vfm-8o-q6T" secondAttribute="leading" constant="40" id="7mV-wM-SiG"/>
+                            <constraint firstItem="Odt-md-PzD" firstAttribute="firstBaseline" secondItem="XQf-D7-cM8" secondAttribute="firstBaseline" id="Bms-hx-lIa"/>
+                            <constraint firstItem="vfm-8o-q6T" firstAttribute="bottom" secondItem="tKO-m1-zSQ" secondAttribute="bottom" constant="555" id="EAf-go-9Ya"/>
+                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="baseline" secondItem="Odt-md-PzD" secondAttribute="baseline" id="Nkn-Gr-qyj"/>
+                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="firstBaseline" secondItem="Odt-md-PzD" secondAttribute="firstBaseline" id="UdJ-U7-sEe"/>
+                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="top" secondItem="vfm-8o-q6T" secondAttribute="top" constant="71" id="XyA-62-MEV"/>
+                            <constraint firstItem="Odt-md-PzD" firstAttribute="leading" secondItem="tKO-m1-zSQ" secondAttribute="trailing" constant="8" symbolic="YES" id="gqk-d7-cXo"/>
+                            <constraint firstItem="Odt-md-PzD" firstAttribute="bottom" secondItem="XQf-D7-cM8" secondAttribute="bottom" id="h5P-GS-4jm"/>
+                            <constraint firstItem="XQf-D7-cM8" firstAttribute="leading" secondItem="Odt-md-PzD" secondAttribute="trailing" constant="8" symbolic="YES" id="oqC-Uj-LUl"/>
+                            <constraint firstItem="vfm-8o-q6T" firstAttribute="trailing" secondItem="XQf-D7-cM8" secondAttribute="trailing" constant="49" id="wzr-za-cxa"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GCg-Qb-YFZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1229.7709923664122" y="771.83098591549299"/>
+        </scene>
+        <!--Add Post View Controller-->
+        <scene sceneID="cAo-fl-EeH">
+            <objects>
+                <viewController id="Log-NU-D5N" customClass="AddPostViewController" customModule="Pollexa" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zkI-Dz-DnO">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yDU-8X-zGs">
+                                <rect key="frame" x="41" y="155" width="310" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ADD POST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1t-eY-fzg">
+                                <rect key="frame" x="41" y="105" width="129" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xuj-EU-Ib3">
+                                <rect key="frame" x="41" y="313" width="151" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gTj-p2-JxW">
+                                <rect key="frame" x="200" y="313" width="151" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="EZZ-NH-EiR"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5bv-UP-NPb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2147" y="772"/>
+        </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="s25-jB-a0D">
             <objects>
@@ -352,7 +480,7 @@
                     </view>
                     <connections>
                         <outlet property="iconImageView" destination="z6J-ai-hcO" id="wOd-Xx-U4h"/>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="showDiscoverViewController" modalPresentationStyle="fullScreen" id="geW-xv-2o3"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="showDiscoverViewController" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="geW-xv-2o3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTz-2w-OaM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -366,35 +494,41 @@
         <image name="avatar_1" width="80" height="80"/>
         <image name="avatar_5" width="80" height="80"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="eye.slash" catalog="system" width="128" height="95"/>
         <image name="hand.thumbsup" catalog="system" width="123" height="128"/>
+        <image name="pencil.and.scribble" catalog="system" width="128" height="86"/>
         <image name="post_1_option_1" width="2250" height="1685.5"/>
         <image name="post_1_option_2" width="2400" height="1600"/>
+        <image name="square.and.arrow.down" catalog="system" width="112" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
