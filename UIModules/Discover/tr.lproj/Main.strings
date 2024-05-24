@@ -1,0 +1,72 @@
+
+/* Class = "UITextView"; text = "I am in the middle of these cakes. Which dessert should I serve at my party?"; ObjectID = "6Id-jA-zRQ"; */
+"6Id-jA-zRQ.text" = "Partimde hangi tatlıyı servis etmeliyim?";
+
+/* Class = "UIButton"; configuration.subtitle = "See Details"; ObjectID = "9Oh-br-4Gw"; */
+"9Oh-br-4Gw.configuration.subtitle" = "Detaylar İncele";
+
+/* Class = "UIButton"; configuration.title = "2 Active Polls"; ObjectID = "9Oh-br-4Gw"; */
+"9Oh-br-4Gw.configuration.title" = "2 Aktif Anket";
+
+/* Class = "UIButton"; normalTitle = "2 Active Polls"; ObjectID = "9Oh-br-4Gw"; */
+"9Oh-br-4Gw.normalTitle" = "2 Aktif Anket";
+
+/* Class = "UILabel"; text = "ADD POST"; ObjectID = "B1t-eY-fzg"; */
+"B1t-eY-fzg.text" = "ADD POST";
+
+/* Class = "UIButton"; configuration.title = "+"; ObjectID = "E1Z-Y3-K7q"; */
+"E1Z-Y3-K7q.configuration.title" = "+";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "E1Z-Y3-K7q"; */
+"E1Z-Y3-K7q.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "6 Total Votes"; ObjectID = "EtM-tB-972"; */
+"EtM-tB-972.text" = "6 Toplam Oy";
+
+/* Class = "UILabel"; text = "2 minutes ago"; ObjectID = "Jm2-iY-rqv"; */
+"Jm2-iY-rqv.text" = "2 dk önce";
+
+/* Class = "UIButton"; configuration.title = "Update"; ObjectID = "Odt-md-PzD"; */
+"Odt-md-PzD.configuration.title" = "Güncelle";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Odt-md-PzD"; */
+"Odt-md-PzD.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Hide"; ObjectID = "XQf-D7-cM8"; */
+"XQf-D7-cM8.configuration.title" = "Hide";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "XQf-D7-cM8"; */
+"XQf-D7-cM8.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "fVA-zw-xWj"; */
+"fVA-zw-xWj.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Discover"; ObjectID = "fYO-U1-aL4"; */
+"fYO-U1-aL4.text" = "Keşfet";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "jSh-Bs-uDw"; */
+"jSh-Bs-uDw.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "LAST VOTED 1 MINUTE AGO"; ObjectID = "mKH-hH-REC"; */
+"mKH-hH-REC.text" = "SON GÜNCELLEME 1 DK ÖNCE";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "pq9-m5-MbW"; */
+"pq9-m5-MbW.text" = "100%";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "qPD-O6-wLu"; */
+"qPD-O6-wLu.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Save"; ObjectID = "tKO-m1-zSQ"; */
+"tKO-m1-zSQ.configuration.title" = "KAYDET";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "tKO-m1-zSQ"; */
+"tKO-m1-zSQ.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Lisa Bryant"; ObjectID = "vR5-Yv-Owe"; */
+"vR5-Yv-Owe.text" = "Lisa Bryant";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "wk2-0S-JHE"; */
+"wk2-0S-JHE.text" = "100%";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "yDU-8X-zGs"; */
+"yDU-8X-zGs.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";

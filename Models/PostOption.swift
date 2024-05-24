@@ -9,7 +9,7 @@ import UIKit
 
 extension Post {
     
-    struct Option: Decodable {
+    struct Option: Codable {
         
         // MARK: - Types
         enum CodingKeys: String, CodingKey {
@@ -40,6 +40,15 @@ extension Post {
                     debugDescription: "An image with name \(imageName) could not be loaded from the bundle.")
                 )
             }
+        }
+        
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            
+            try container.encode(id, forKey: .id)
+            
+            let imageName = (image.accessibilityIdentifier ?? "") // or however you are storing image name
+            try container.encode(imageName, forKey: .imageName)
         }
     }
 }

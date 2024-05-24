@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  PollexaTest1
+
+  Created by Aslıhan Gürkan on 24.05.2024.
+  
+*/
+"lastVoted" = "SON OY";
+"upperAGO" = "ÖNCE";
+"lowerAGO" = "önce";
+"justNow" = "şimdi";
+"JUST_NOW" = "ŞİMDİ";
+"totalVotes" = "Toplam Oy";
+"totalVote" = "Oy";
+"year" = "yıl";
+"years" = "yıl";
+"month" = "ay";
+"months" = "ay";
+"day" = "gün";
+"days" = "gün";
+"hour" = "saat";
+"hours" = "saat";
+"minute" = "dakika";
+"minutes" = "dakika";
+"second" = "saniye";
+"seconds" = "saniye";

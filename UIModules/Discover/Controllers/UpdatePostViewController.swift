@@ -9,14 +9,10 @@ import UIKit
 
 class UpdatePostViewController: UIViewController {
 
+    @IBOutlet weak var saveButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-    }
-
-    func didSelectPost(postText: String, selectedLeftImage: UIImage, selectedRightImage: UIImage) {
-//        productNameLabel.text = name
-//        productImageView.image = UIImage(named: imageName)
+        view.backgroundColor = UIColor.white
     }
     
 }

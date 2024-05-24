@@ -5,7 +5,7 @@
 
 import UIKit
 
-struct User: Decodable {
+struct User: Codable {
     
     // MARK: - Types
     enum CodingKeys: String, CodingKey {
@@ -36,5 +36,15 @@ struct User: Decodable {
                 debugDescription: "An image with name \(imageName) could not be loaded from the bundle.")
             )
         }
+    }    
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(id, forKey: .id)
+        try container.encode(username, forKey: .username)
+        
+        let imageName = (image.accessibilityIdentifier ?? "") // or however you are storing image name
+        try container.encode(imageName, forKey: .imageName)
     }
 }

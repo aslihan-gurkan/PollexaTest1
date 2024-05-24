@@ -7,15 +7,15 @@
 
 import UIKit
 
-struct Post: Decodable {
+struct Post: Codable {
     
     let id: String
     let createdAt: Date
     let content: String
     let options: [Option]
-    let votesForLeftImage: Int
-    let votesForRightImage: Int
-    let lastVoted: Date
+    var votesForLeftImage: Int
+    var votesForRightImage: Int
+    var lastVoted: Date
     let user: User
 }
 

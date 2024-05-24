@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  PollexaTest1
+
+  Created by Aslıhan Gürkan on 24.05.2024.
+  
+*/
+"lastVoted" = "LAST VOTED";
+"upperAGO" = "AGO";
+"lowerAGO" = "ago";
+"justNow" = "just now";
+"JUST_NOW" = "JUST NOW";
+"totalVotes" = "Total Votes";
+"totalVote" = "Vote";
+"year" = "year";
+"years" = "years";
+"month" = "month";
+"months" = "months";
+"day" = "day";
+"days" = "days";
+"hour" = "hour";
+"hours" = "hours";
+"minute" = "minute";
+"minutes" = "minutes";
+"second" = "second";
+"seconds" = "seconds";

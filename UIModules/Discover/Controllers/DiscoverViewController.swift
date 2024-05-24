@@ -85,7 +85,11 @@ class DiscoverViewController: UIViewController {
     
 }
 
-extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
+protocol UpdatePostDelegate: AnyObject {
+    func didTapButtonInCell(_ cell: PostTableViewCell)
+}
+
+extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource, UpdatePostDelegate {
     
 //    func numberOfSections(in tableView: UITableView) -> Int {
 //        return postViewModels.count
@@ -101,6 +105,8 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "postTableViewCell", for: indexPath) as? PostTableViewCell else {
             return UITableViewCell()
         }
+        cell.delegate = self
+        
         let postViewModel = postViewModels[indexPath.row]
         cell.configure(with: postViewModel)
        
@@ -115,4 +121,16 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         cell.layer.borderColor = UIColor.systemGroupedBackground.cgColor
         cell.layer.cornerRadius = 35
     }
+    
+    // MyTableViewCellDelegate protokolünün gereksinimlerini uygula
+       func didTapButtonInCell(_ cell: PostTableViewCell) {
+           // Burada başka bir view controller göster
+           print("Button tapped in cell")
+           let viewControllerToShow = UpdatePostViewController()
+//           viewControllerToShow.delegate = self
+           viewControllerToShow.modalPresentationStyle = .pageSheet
+           viewControllerToShow.sheetPresentationController?.detents = [.medium()]
+           viewControllerToShow.sheetPresentationController?.prefersGrabberVisible = true
+           present(viewControllerToShow, animated: true, completion: nil)
+       }
 }

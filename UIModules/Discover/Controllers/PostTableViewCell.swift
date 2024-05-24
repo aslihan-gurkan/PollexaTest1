@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol PostSelectionDelegate {
-    func didSelectPost(postText: String, selectedLeftImage: UIImage, selectedRightImage: UIImage)
-}
-
 class PostTableViewCell: UITableViewCell {
     
     @IBOutlet weak var profileImage: UIImageView!
@@ -26,7 +22,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var rightPercentage: UILabel!
     @IBOutlet weak var totalVotesLabel: UILabel!
     
-    var delegate: PostSelectionDelegate?
+    var viewModel: PostViewModel?
     
     var votesForLeftImageCount: Int = 0
     var votesForRightImageCount: Int = 0
@@ -50,6 +46,9 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func configure(with viewModel: PostViewModel) {
+        
+        let lastVotedContent = NSLocalizedString("lastVoted", comment: "")
+        self.viewModel = viewModel
         profileImage.image = viewModel.userImage
         userNameLabel.text = viewModel.username
         contentLabel.text = viewModel.content
@@ -57,11 +56,11 @@ class PostTableViewCell: UITableViewCell {
         dateLabel.text = dateRemainder
         
         let lastVotedDateRemainder = DateHelper.calculateDateRemainder(from: viewModel.lastVotedAt, isVote: true)
-        VotedDateLabel.text = "LAST VOTED \(lastVotedDateRemainder)"
+        VotedDateLabel.text = "\(lastVotedContent) \(lastVotedDateRemainder)"
         
         leftImage.image = viewModel.options[0].image
         rightImage .image = viewModel.options[1].image
- 
+        
         votesForLeftImageCount = viewModel.votesForLeftImage
         votesForRightImageCount = viewModel.votesForRightImage
         
@@ -84,50 +83,60 @@ class PostTableViewCell: UITableViewCell {
     func voteForLeftImage() {
         updateVotes(newVote: .leftImage)
     }
-
+    
     func voteForRightImage() {
         updateVotes(newVote: .rightImage)
     }
     
     private func updateVotes(newVote: UserVote) {
         
+        guard let viewModel = viewModel else { return }
+        let increment: Bool
+        
         switch userVote {
-            case .none:
-                updateVoteCount(for: newVote, increment: true)
-            case .leftImage:
-                if newVote == .leftImage {
-                    updateVoteCount(for: .leftImage, increment: false)
-                } else {
-                    updateVoteCount(for: .leftImage, increment: false)
-                    updateVoteCount(for: .rightImage, increment: true)
-                }
-            case .rightImage:
-                if newVote == .rightImage {
-                    updateVoteCount(for: .rightImage, increment: false)
-                } else {
-                    updateVoteCount(for: .rightImage, increment: false)
-                    updateVoteCount(for: .leftImage, increment: true)
-                }
+        case .none:
+            increment = true
+            updateVoteCount(for: newVote, increment: true)
+        case .leftImage:
+            if newVote == .leftImage {
+                increment = false
+                updateVoteCount(for: .leftImage, increment: false)
+            } else {
+                increment = true
+                updateVoteCount(for: .leftImage, increment: false)
+                updateVoteCount(for: .rightImage, increment: true)
             }
+        case .rightImage:
+            if newVote == .rightImage {
+                increment = false
+                updateVoteCount(for: .rightImage, increment: false)
+            } else {
+                increment = true
+                updateVoteCount(for: .rightImage, increment: false)
+                updateVoteCount(for: .leftImage, increment: true)
+            }
+        }
         
         userVote = (userVote == newVote) ? .none : newVote
         updatePercentageLabels()
         updateButtons()
+        
+        // Update the votes in the PostProvider and save to file
+        PostProvider.shared.vote(for: viewModel.id, optionId: (newVote == .leftImage) ? viewModel.options[0].id : viewModel.options[1].id, increment: increment)
+        
     }
     
     private func updateVoteCount(for vote: UserVote, increment: Bool) {
-       if vote == .leftImage {
-           votesForLeftImageCount = max(0, votesForLeftImageCount + (increment ? 1 : -1))
-       } else if vote == .rightImage {
-           votesForRightImageCount = max(0, votesForRightImageCount + (increment ? 1 : -1))
-       }
+        if vote == .leftImage {
+            votesForLeftImageCount = max(0, votesForLeftImageCount + (increment ? 1 : -1))
+        } else if vote == .rightImage {
+            votesForRightImageCount = max(0, votesForRightImageCount + (increment ? 1 : -1))
+        }
     }
     
     func updatePercentageLabels() {
         
         if totalVotes > 0 {
-//            let leftImagePercentage = Double(votesForLeftImageCount / totalVotes) * 100
-//            let rightImagePercentage = Double(votesForRightImageCount / totalVotes) * 100
             let leftImagePercentage = (Double(votesForLeftImageCount) / Double(totalVotes)) * 100
             let rightImagePercentage = (Double(votesForRightImageCount) / Double(totalVotes)) * 100
             leftPercentage.text = String(format: "%.0f%%", leftImagePercentage)
@@ -146,7 +155,23 @@ class PostTableViewCell: UITableViewCell {
     }
     
     private func updateTotalVotesLabel() {
-        totalVotesLabel.text = "\(totalVotes) Total Votes"
+        
+        let localizedTotalVotes = languageControl()
+        totalVotesLabel.text = "\(totalVotes) \(localizedTotalVotes)"
+    }
+    
+    private func languageControl() -> String {
+        let localizedTotalVotesSingular = NSLocalizedString("totalVote", comment: "")
+        let localizedTotalVotesPlural = NSLocalizedString("totalVotes", comment: "")
+        
+        let currentLocale = Locale.current
+        let isEnglish = currentLocale.language.languageCode?.identifier == "en"
+        
+        if isEnglish {
+            return totalVotes == 1 ? localizedTotalVotesSingular : localizedTotalVotesPlural
+        } else {
+            return localizedTotalVotesPlural
+        }
     }
     
     private func setupViews() {
@@ -156,17 +181,16 @@ class PostTableViewCell: UITableViewCell {
         
         leftImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // Sol üst ve sol alt köşeleri maskeler
         rightImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner] // Sağ üst ve sağ alt köşeleri maskeler
-                
+        
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
         
         leftLikeButton.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .small)
         rightLikeButton.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(scale: .small)
     }
-    
-    @IBAction func detailPostButtonTapped(_ sender: Any) {
-        delegate?.didSelectPost(postText: userNameLabel.text!, selectedLeftImage: leftImage.image!, selectedRightImage: rightImage.image!)
-        
+  
+    weak var delegate: UpdatePostDelegate?
+    @IBAction func detailButtonTapped(_ sender: Any) {
+        delegate?.didTapButtonInCell(self)
     }
-    
     
 }

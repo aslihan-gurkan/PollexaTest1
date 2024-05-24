@@ -6,8 +6,14 @@
 //
 
 import Foundation
-
+   
 class DateHelper {
+    
+    static let localizedUpperAGOContent = NSLocalizedString("upperAGO", comment: "")
+    static let localizedLowerAGOContent = NSLocalizedString("lowerAGO", comment: "")
+    static let localizedJustNow = NSLocalizedString("justNow", comment: "")
+    static let localizedJustNowUppercase = NSLocalizedString("JUST_NOW", comment: "")
+    
     static func calculateDateRemainder(from date: Date, isVote: Bool) -> String {
         let calendar = Calendar.current
         let currentDate = Date()
@@ -22,48 +28,23 @@ class DateHelper {
             ("second", components.second)
         ]
         
+        // Locale kontrolü
+        let currentLocale = Locale.current
+        let isEnglish = currentLocale.language.languageCode?.identifier == "en"
+
         for (unit, value) in timeUnits {
             if let value = value, value > 0 {
-                let unitString = value == 1 ? unit : unit + "s"
-                let agoString = isVote ? " AGO" : " ago"
+                let localizedUnitSingular = NSLocalizedString(unit, comment: "")
+                let localizedUnitPlural = NSLocalizedString("\(unit)s", comment: "")
+                
+                let unitString = value == 1 ? localizedUnitSingular : localizedUnitPlural
+                let agoString = isVote ? " \(localizedUpperAGOContent)" : " \(localizedLowerAGOContent)"
                 
                 let formattedValue = "\(value) \(unitString)"
                 return isVote ? formattedValue.uppercased() + agoString.uppercased() : formattedValue.lowercased() + agoString
             }
         }
         
-        return isVote ? "JUST NOW" : "just now"
+        return isVote ? localizedJustNowUppercase : localizedJustNow
     }
 }
-
-/*
-//TODO:
- 
-class DateeHelper {
-    static func calculateDateRemainder<T: Comparable>(from date: T, to currentDate: T) -> String where T: Strideable {
-        guard let date = date as? Date, let currentDate = currentDate as? Date else {
-            return "Invalid date"
-        }
-        
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date, to: currentDate)
-        
-        let timeUnits = [
-            ("year", components.year),
-            ("month", components.month),
-            ("day", components.day),
-            ("hour", components.hour),
-            ("minute", components.minute),
-            ("second", components.second)
-        ]
-        
-        for (unit, value) in timeUnits {
-            if let value = value, value > 0 {
-                return value == 1 ? "1 \(unit) ago" : "\(value) \(unit)s ago"
-            }
-        }
-        
-        return "just now"
-    }
-}
-*/
