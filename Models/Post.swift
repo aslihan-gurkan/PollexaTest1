@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Post: Codable {
+struct Post: Decodable {
     
     let id: String
     let createdAt: Date
@@ -17,5 +17,6 @@ struct Post: Codable {
     var votesForRightImage: Int
     var lastVoted: Date
     let user: User
+
 }
 

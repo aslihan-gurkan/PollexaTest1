@@ -119,11 +119,7 @@ class PostTableViewCell: UITableViewCell {
         
         userVote = (userVote == newVote) ? .none : newVote
         updatePercentageLabels()
-        updateButtons()
-        
-        // Update the votes in the PostProvider and save to file
-        PostProvider.shared.vote(for: viewModel.id, optionId: (newVote == .leftImage) ? viewModel.options[0].id : viewModel.options[1].id, increment: increment)
-        
+        updateButtons()        
     }
     
     private func updateVoteCount(for vote: UserVote, increment: Bool) {
@@ -190,7 +186,7 @@ class PostTableViewCell: UITableViewCell {
   
     weak var delegate: UpdatePostDelegate?
     @IBAction func detailButtonTapped(_ sender: Any) {
-        delegate?.didTapButtonInCell(self)
+        delegate?.didUpdateButtonInCell(self)
     }
     
 }

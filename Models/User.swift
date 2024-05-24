@@ -5,7 +5,7 @@
 
 import UIKit
 
-struct User: Codable {
+struct User: Decodable {
     
     // MARK: - Types
     enum CodingKeys: String, CodingKey {
@@ -37,14 +37,4 @@ struct User: Codable {
             )
         }
     }    
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(id, forKey: .id)
-        try container.encode(username, forKey: .username)
-        
-        let imageName = (image.accessibilityIdentifier ?? "") // or however you are storing image name
-        try container.encode(imageName, forKey: .imageName)
-    }
 }

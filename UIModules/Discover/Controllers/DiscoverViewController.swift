@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol UpdatePostDelegate: AnyObject {
+    func didUpdateButtonInCell(_ cell: PostTableViewCell)
+}
+
 class DiscoverViewController: UIViewController {
 
     // MARK: - Properties
     let postProvider = PostProvider.shared
     private var postViewModels = [PostViewModel]()
 
+    private var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var activePollsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -30,6 +35,7 @@ class DiscoverViewController: UIViewController {
         tableView.dataSource = self
         
         setupViews()
+        setupActivityIndicator()
         fetchPosts()
     }
 
@@ -37,74 +43,96 @@ class DiscoverViewController: UIViewController {
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
     }
     
+    func setupActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+    }
+    
     func fetchPosts() {
+        activityIndicator.startAnimating()
         postProvider.fetchAll { [weak self] result in
-            switch result {
-            case .success(let posts):
-                self?.postViewModels = posts.map { PostViewModel(post: $0) }
-                self?.tableView.reloadData()
-                self?.updateActivePolls()
-            case .failure(let error):
-                debugPrint(error.localizedDescription)
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                switch result {
+                case .success(let posts):
+                    self?.postViewModels = posts.map { PostViewModel(post: $0) }
+                    self?.tableView.reloadData()
+                    self?.updateActivePolls()
+                case .failure(let error):
+                    debugPrint(error.localizedDescription)
+                }
             }
         }
     }
-
+    
     private func updateActivePolls() {
         
         // TODO: Henüz oylanmamış anketlerin sayısını hesapla
         let activePollsCount = postViewModels.count //To test constraint of tableView make : 0
         
+        setupActivePollsButtonView(activePollsCount: activePollsCount)
+    }
+    
+    func setupActivePollsButtonView(activePollsCount: Int) {
+        
+        activePollsButton.layer.cornerRadius = 20 //activePollsButton.frame.height / 2
+        activePollsButton.tintColor = UIColor.systemGroupedBackground
+        
         if activePollsCount > 0 {
             activePollsButton.isHidden = false
-            let font = UIFont(name: "Arial-Bold", size: 17.0)
-            activePollsButton.titleLabel?.font = font
-            activePollsButton.setTitle("\(activePollsCount) \(activePollsCount == 1 ? "Active Poll" : "Active Polls")", for: .normal)
+            
+            // Font ayarlarını yap
+            let titleFont = UIFont(name: "Arial-BoldMT", size: 17.0) // Arial-Bold yerine Arial-BoldMT kullan
+            let subtitleFont = UIFont(name: "Avenir-Light", size: 14.0)
+            
+            let titleText = "\(activePollsCount) \(activePollsCount == 1 ? "Active Poll" : "Active Polls")"
+            
+            let titleAttributes: [NSAttributedString.Key: Any] = [
+                .font: titleFont as Any,
+                .foregroundColor: UIColor.white
+            ]
+            
+            let subtitleAttributes: [NSAttributedString.Key: Any] = [
+                .font: subtitleFont as Any,
+                .foregroundColor: UIColor.white.withAlphaComponent(0.7)
+            ]
+            
+            let subTitleText = NSLocalizedString("SeeDetails", comment: "")
+            
+            let titleAttributedString = NSAttributedString(string: titleText, attributes: titleAttributes)
+            let subtitleAttributedString = NSAttributedString(string: subTitleText, attributes: subtitleAttributes)
 
-//            if let titleLabel = activePollsButton.titleLabel {
-//                titleLabel.font = UIFont(name: "Arial-BoldMT", size: 17)
-//            }
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(titleAttributedString)
+            finalAttributedString.append(NSAttributedString(string: "\n"))
+            finalAttributedString.append(subtitleAttributedString)
             
             
+            activePollsButton.setAttributedTitle(finalAttributedString, for: .normal)
             tableViewTopConstraint.constant = 110 // TODO: ayrı func. yap :Yukarı kaydırmak istediğiniz mesafe
-            
         } else {
-            
             activePollsButton.isHidden = true
             tableViewTopConstraint.constant = 20 // Normal pozisyona geri dön
         }
-        
-        setupActivePollsButtonView()
     }
     
-    func setupActivePollsButtonView() {
-        activePollsButton.layer.cornerRadius = 20 //activePollsButton.frame.height / 2
-        activePollsButton.tintColor = UIColor.systemGroupedBackground
-
-    }
-    
-}
-
-protocol UpdatePostDelegate: AnyObject {
-    func didTapButtonInCell(_ cell: PostTableViewCell)
 }
 
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource, UpdatePostDelegate {
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return postViewModels.count
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postViewModels.count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "postTableViewCell", for: indexPath) as? PostTableViewCell else {
             return UITableViewCell()
         }
+        //UpdatePostDelegate
         cell.delegate = self
         
         let postViewModel = postViewModels[indexPath.row]
@@ -122,15 +150,14 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource, Up
         cell.layer.cornerRadius = 35
     }
     
-    // MyTableViewCellDelegate protokolünün gereksinimlerini uygula
-       func didTapButtonInCell(_ cell: PostTableViewCell) {
-           // Burada başka bir view controller göster
-           print("Button tapped in cell")
-           let viewControllerToShow = UpdatePostViewController()
-//           viewControllerToShow.delegate = self
-           viewControllerToShow.modalPresentationStyle = .pageSheet
-           viewControllerToShow.sheetPresentationController?.detents = [.medium()]
-           viewControllerToShow.sheetPresentationController?.prefersGrabberVisible = true
-           present(viewControllerToShow, animated: true, completion: nil)
-       }
+   func didUpdateButtonInCell(_ cell: PostTableViewCell) {
+       
+       let viewControllerToShow = UpdatePostViewController()
+
+       viewControllerToShow.modalPresentationStyle = .pageSheet
+       viewControllerToShow.sheetPresentationController?.detents = [.medium()]
+       // show grabber
+       viewControllerToShow.sheetPresentationController?.prefersGrabberVisible = true
+       present(viewControllerToShow, animated: true, completion: nil)
+   }
 }
