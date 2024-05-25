@@ -26,7 +26,7 @@ class PostTableViewCell: UITableViewCell {
     
     var votesForLeftImageCount: Int = 0
     var votesForRightImageCount: Int = 0
-    private var userVote: UserVote = .none
+    var userVote: UserVote = .none
     
     var totalVotes: Int {
         return votesForLeftImageCount + votesForRightImageCount
@@ -47,14 +47,14 @@ class PostTableViewCell: UITableViewCell {
     
     func configure(with viewModel: PostViewModel) {
         
-        let lastVotedContent = NSLocalizedString("lastVoted", comment: "")
         self.viewModel = viewModel
         profileImage.image = viewModel.userImage
         userNameLabel.text = viewModel.username
         contentLabel.text = viewModel.content
-        let dateRemainder = DateHelper.calculateDateRemainder(from: viewModel.createdDate, isVote: false)
-        dateLabel.text = dateRemainder
         
+        dateLabel.text = DateHelper.calculateDateRemainder(from: viewModel.createdDate, isVote: false)
+        
+        let lastVotedContent = NSLocalizedString("lastVoted", comment: "")
         let lastVotedDateRemainder = DateHelper.calculateDateRemainder(from: viewModel.lastVotedAt, isVote: true)
         VotedDateLabel.text = "\(lastVotedContent) \(lastVotedDateRemainder)"
         
@@ -75,11 +75,6 @@ class PostTableViewCell: UITableViewCell {
         voteForRightImage()
     }
     
-    func updateButtons() {
-        leftLikeButton.setImage(UIImage(systemName: userVote == .leftImage ? "hand.thumbsup.fill" : "hand.thumbsup"), for: .normal)
-        rightLikeButton.setImage(UIImage(systemName: userVote == .rightImage ? "hand.thumbsup.fill" : "hand.thumbsup"), for: .normal)
-    }
-    
     func voteForLeftImage() {
         updateVotes(newVote: .leftImage)
     }
@@ -88,7 +83,7 @@ class PostTableViewCell: UITableViewCell {
         updateVotes(newVote: .rightImage)
     }
     
-    private func updateVotes(newVote: UserVote) {
+    func updateVotes(newVote: UserVote) {
         
         guard let viewModel = viewModel else { return }
         let increment: Bool
@@ -119,7 +114,7 @@ class PostTableViewCell: UITableViewCell {
         
         userVote = (userVote == newVote) ? .none : newVote
         updatePercentageLabels()
-        updateButtons()        
+        updateButtonStates()
     }
     
     private func updateVoteCount(for vote: UserVote, increment: Bool) {
@@ -156,12 +151,16 @@ class PostTableViewCell: UITableViewCell {
         totalVotesLabel.text = "\(totalVotes) \(localizedTotalVotes)"
     }
     
+    func updateButtonStates() {
+        leftLikeButton.setImage(UIImage(systemName: userVote == .leftImage ? "hand.thumbsup.fill" : "hand.thumbsup"), for: .normal)
+        rightLikeButton.setImage(UIImage(systemName: userVote == .rightImage ? "hand.thumbsup.fill" : "hand.thumbsup"), for: .normal)
+    }
+    
     private func languageControl() -> String {
         let localizedTotalVotesSingular = NSLocalizedString("totalVote", comment: "")
         let localizedTotalVotesPlural = NSLocalizedString("totalVotes", comment: "")
         
-        let currentLocale = Locale.current
-        let isEnglish = currentLocale.language.languageCode?.identifier == "en"
+        let isEnglish = DateHelper.localeControl()
         
         if isEnglish {
             return totalVotes == 1 ? localizedTotalVotesSingular : localizedTotalVotesPlural
@@ -171,9 +170,9 @@ class PostTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-        //TODO: fonksiyon değişikliği ve image kenarları
-        leftImage.layer.cornerRadius = 8 //leftImage.layer.cornerRadius / 2
-        rightImage.layer.cornerRadius = 8 //rightImage.layer.cornerRadius / 2
+        let cornerRadius: CGFloat = 8 //leftImage.layer.cornerRadius / 2
+        leftImage.layer.cornerRadius = cornerRadius
+        rightImage.layer.cornerRadius = cornerRadius
         
         leftImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // Sol üst ve sol alt köşeleri maskeler
         rightImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner] // Sağ üst ve sağ alt köşeleri maskeler
@@ -185,6 +184,7 @@ class PostTableViewCell: UITableViewCell {
     }
   
     weak var delegate: UpdatePostDelegate?
+    
     @IBAction func detailButtonTapped(_ sender: Any) {
         delegate?.didUpdateButtonInCell(self)
     }

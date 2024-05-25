@@ -29,8 +29,7 @@ class DateHelper {
         ]
         
         // Locale kontrolü
-        let currentLocale = Locale.current
-        let isEnglish = currentLocale.language.languageCode?.identifier == "en"
+        let isEnglish = localeControl()
 
         for (unit, value) in timeUnits {
             if let value = value, value > 0 {
@@ -46,5 +45,12 @@ class DateHelper {
         }
         
         return isVote ? localizedJustNowUppercase : localizedJustNow
+    }
+    
+    static func localeControl() -> Bool {
+        
+        let currentLocale = Locale.current
+        let isEnglish = currentLocale.language.languageCode?.identifier == "en"
+        return isEnglish
     }
 }

@@ -15,9 +15,9 @@ class DiscoverViewController: UIViewController {
 
     // MARK: - Properties
     let postProvider = PostProvider.shared
-    private var postViewModels = [PostViewModel]()
+    var postViewModels = [PostViewModel]()
 
-    private var activityIndicator: UIActivityIndicatorView!
+    var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var activePollsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -67,7 +67,7 @@ class DiscoverViewController: UIViewController {
         }
     }
     
-    private func updateActivePolls() {
+    func updateActivePolls() {
         
         // TODO: Henüz oylanmamış anketlerin sayısını hesapla
         let activePollsCount = postViewModels.count //To test constraint of tableView make : 0
@@ -84,7 +84,7 @@ class DiscoverViewController: UIViewController {
             activePollsButton.isHidden = false
             
             // Font ayarlarını yap
-            let titleFont = UIFont(name: "Arial-BoldMT", size: 17.0) // Arial-Bold yerine Arial-BoldMT kullan
+            let titleFont = UIFont(name: "Arial-BoldMT", size: 17.0)
             let subtitleFont = UIFont(name: "Avenir-Light", size: 14.0)
             
             let titleText = "\(activePollsCount) \(activePollsCount == 1 ? "Active Poll" : "Active Polls")"

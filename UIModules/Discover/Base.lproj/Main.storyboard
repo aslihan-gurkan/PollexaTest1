@@ -346,9 +346,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKO-m1-zSQ">
-                                <rect key="frame" x="40" y="130" width="96" height="84"/>
+                                <rect key="frame" x="40" y="679" width="90" height="90"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="96" id="0VN-IZ-HfB"/>
+                                    <constraint firstAttribute="height" constant="90" id="egc-34-06o"/>
+                                    <constraint firstAttribute="width" constant="90" id="hYM-T5-u47"/>
                                 </constraints>
                                 <color key="tintColor" red="0.29391571969696972" green="0.29391571969696972" blue="0.29391571969696972" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
@@ -360,10 +361,27 @@
                                     <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                 </buttonConfiguration>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Odt-md-PzD">
-                                <rect key="frame" x="144" y="130" width="96" height="84"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQf-D7-cM8">
+                                <rect key="frame" x="263" y="679" width="90" height="90"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="96" id="qGn-er-bBC"/>
+                                    <constraint firstAttribute="height" constant="90" id="Fwe-kV-5rg"/>
+                                    <constraint firstAttribute="width" constant="90" id="wTy-Md-hOT"/>
+                                </constraints>
+                                <color key="tintColor" red="0.29391571970000002" green="0.29391571970000002" blue="0.29391571970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Hide" imagePadding="5">
+                                    <imageReference key="image" image="eye.slash" catalog="system" symbolScale="large"/>
+                                    <backgroundConfiguration key="background" cornerRadius="20">
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Odt-md-PzD">
+                                <rect key="frame" x="151.66666666666666" y="679" width="90" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="rEf-DB-nSz"/>
+                                    <constraint firstAttribute="width" constant="90" id="tDH-UM-Ypo"/>
                                 </constraints>
                                 <color key="tintColor" red="0.29391571970000002" green="0.29391571970000002" blue="0.29391571970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
@@ -375,32 +393,16 @@
                                     <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                 </buttonConfiguration>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQf-D7-cM8">
-                                <rect key="frame" x="248" y="130" width="96" height="84"/>
-                                <color key="tintColor" red="0.29391571970000002" green="0.29391571970000002" blue="0.29391571970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Hide" imagePadding="5">
-                                    <imageReference key="image" image="eye.slash" catalog="system" symbolScale="large"/>
-                                    <backgroundConfiguration key="background" cornerRadius="20">
-                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                    </backgroundConfiguration>
-                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                </buttonConfiguration>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vfm-8o-q6T"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="leading" secondItem="vfm-8o-q6T" secondAttribute="leading" constant="40" id="7mV-wM-SiG"/>
-                            <constraint firstItem="Odt-md-PzD" firstAttribute="firstBaseline" secondItem="XQf-D7-cM8" secondAttribute="firstBaseline" id="Bms-hx-lIa"/>
-                            <constraint firstItem="vfm-8o-q6T" firstAttribute="bottom" secondItem="tKO-m1-zSQ" secondAttribute="bottom" constant="555" id="EAf-go-9Ya"/>
-                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="baseline" secondItem="Odt-md-PzD" secondAttribute="baseline" id="Nkn-Gr-qyj"/>
-                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="firstBaseline" secondItem="Odt-md-PzD" secondAttribute="firstBaseline" id="UdJ-U7-sEe"/>
-                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="top" secondItem="vfm-8o-q6T" secondAttribute="top" constant="71" id="XyA-62-MEV"/>
-                            <constraint firstItem="Odt-md-PzD" firstAttribute="leading" secondItem="tKO-m1-zSQ" secondAttribute="trailing" constant="8" symbolic="YES" id="gqk-d7-cXo"/>
-                            <constraint firstItem="Odt-md-PzD" firstAttribute="bottom" secondItem="XQf-D7-cM8" secondAttribute="bottom" id="h5P-GS-4jm"/>
-                            <constraint firstItem="XQf-D7-cM8" firstAttribute="leading" secondItem="Odt-md-PzD" secondAttribute="trailing" constant="8" symbolic="YES" id="oqC-Uj-LUl"/>
-                            <constraint firstItem="vfm-8o-q6T" firstAttribute="trailing" secondItem="XQf-D7-cM8" secondAttribute="trailing" constant="49" id="wzr-za-cxa"/>
+                            <constraint firstItem="Odt-md-PzD" firstAttribute="centerX" secondItem="wbf-8e-YSQ" secondAttribute="centerX" id="IgX-To-7Hc"/>
+                            <constraint firstItem="Odt-md-PzD" firstAttribute="bottom" secondItem="vfm-8o-q6T" secondAttribute="bottom" id="S3p-ku-pk5"/>
+                            <constraint firstItem="XQf-D7-cM8" firstAttribute="leading" secondItem="Odt-md-PzD" secondAttribute="trailing" constant="21.333333333333343" id="bSp-OC-r71"/>
+                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="leading" secondItem="vfm-8o-q6T" secondAttribute="leading" constant="40" id="kRj-zJ-VWH"/>
+                            <constraint firstItem="tKO-m1-zSQ" firstAttribute="bottom" secondItem="vfm-8o-q6T" secondAttribute="bottom" id="p0q-dJ-pc5"/>
+                            <constraint firstItem="XQf-D7-cM8" firstAttribute="bottom" secondItem="vfm-8o-q6T" secondAttribute="bottom" id="uJP-Qq-vwW"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -411,7 +413,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GCg-Qb-YFZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1229.7709923664122" y="771.83098591549299"/>
+            <point key="canvasLocation" x="1714" y="744"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="s25-jB-a0D">
