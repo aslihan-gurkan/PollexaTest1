@@ -27,9 +27,6 @@ class DateHelper {
             ("minute", components.minute),
             ("second", components.second)
         ]
-        
-        // Locale kontrolü
-        let isEnglish = localeControl()
 
         for (unit, value) in timeUnits {
             if let value = value, value > 0 {
