@@ -5,6 +5,7 @@ Usage
 * The app fetches posts from a local JSON file and displays them in a table view.
 * Users can vote for options and see the updated vote counts and percentages.
 * If you click on the button you voted on again, you will get your vote back.
+* If activepollscount is set to 0 in DiscoverViewController, Tableview constraints are also updated.
 
 
 Features
